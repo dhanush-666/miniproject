@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
+        /* Add this CSS to your stylesheet or in a <style> tag in your HTML file */
+
+        /* Form container */
+        .form-container {
+            margin: 0 auto; /* Center the form */
+            max-width: 400px; /* Adjust the width as needed */
+        }
+
+        /* Form elements */
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333; /* Text color */
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="tel"] {
+            width: 97%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc; /* Border color */
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333; /* Text color */
+        }
+
+        /* Submit button */
+        .form-container input[type="submit"] {
+            background-color: #333; /* Button background color */
+            color: #fff; /* Button text color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: rigth 10px;
+        }
+
+        /* Submit button hover effect */
+        .form-container input[type="submit"]:hover {
+            background-color: #555; /* Button background color on hover */
+        }
+        .manage-button {
+            display: inline-block;
+            background-color: #333; /* Button background color */
+            color: #fff; /* Button text color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none; /* Remove underlines from links */
+        }
+/* "Manage" button hover effect */
+.manage-button:hover{
+    background-color: #555; /* Button background color on hover */
+
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Customer</h2>
+        <div class="form-container">
+            <form method="POST" action="customer.php">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" name="customerName" required><br>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" required><br>
+                
+              <input type="submit" id="submitButton" value="Submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="sucess.php" class="manage-button">Manage</a>
+            </form>
+            
+        </div>
+    </div>
+    <script>
+    function disableSubmitButton() {
+        // Disable the submit button to prevent multiple submissions
+        var submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true;
+        return true; // Allow form submission
+    }
+</script>
+<script>
+    // Fetch the footer HTML using a fetch request
+    fetch('footer.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(footerHtml => {
+            // Insert the footer HTML into the current page
+            document.body.insertAdjacentHTML('beforeend', footerHtml);
+        })
+        .catch(error => {
+            console.error('Error fetching footer:', error);
+        });
+</script>
+</body>
+</html>

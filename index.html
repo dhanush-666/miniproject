@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Side Navigation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        .sidenav {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            background-color: #333;
+            color: #fff;
+            width: 200px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidenav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidenav ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidenav a {
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .sidenav img {
+            max-width: 20px;
+            max-height: 20px;
+        }
+
+        .content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidenav">
+        <ul>
+            <li><img src="source/customer.png" alt="Customer Icon" id="customer-icon"><a href="#" id="customer-button">Customer</a></li>
+            <li><img src="source/product.png" alt="Product Icon" id="product-icon"><a href="#" id="product-button">Product</a></li>
+            <li><img src="source/supplier.png" alt="Supplier Icon" id="supplier-icon"><a href="#" id="supplier-button">Supplier</a></li>
+            <li><img src="source/report.png" alt="Report Icon" id="report-icon"><a href="#" id="report-button">Report</a></li>
+            <li><img src="source/bill.png" alt="Bill Icon" id="bill-icon"><a href="#" id="bill-button">Bill</a></li>
+            <!-- Add similar entries for other sections -->
+        </ul>
+    </div>
+    <div class="content">
+        <div id="data-container">
+            <!-- Forms will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        function loadForm(section) {
+            if (section === 'bill') {
+                // Open the "Bill" page in a new window or tab
+                window.open('bill.php', '_blank');
+            } else {
+                // Handle other sections as before
+                var dataContainer = document.getElementById('data-container');
+                var iconElements = document.querySelectorAll('.sidenav img');
+    
+                // Remove any active classes from icons
+                iconElements.forEach(function (icon) {
+                    icon.classList.remove('active');
+                });
+    
+                // Add an active class to the clicked icon
+                var activeIcon = document.getElementById(section + '-icon');
+                activeIcon.classList.add('active');
+    
+                // Determine the file extension based on the section
+                var fileExtension = section === 'bill' ? 'php' : 'html';
+                var fileExtension = section === 'report' ? 'php' : 'html';
+    
+                // Make an AJAX request to load the file
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            dataContainer.innerHTML = xhr.responseText;
+                        } else {
+                            dataContainer.innerHTML = 'Error loading content';
+                        }
+                    }
+                };
+    
+                xhr.open('GET', section + '.' + fileExtension, true);
+                xhr.send();
+            }
+        }
+
+        // Attach the loadForm function to the corresponding buttons
+        document.getElementById('customer-button').addEventListener('click', function () {
+            loadForm('customer');
+        });
+
+        document.getElementById('product-button').addEventListener('click', function () {
+            loadForm('product');
+        });
+
+        document.getElementById('supplier-button').addEventListener('click', function () {
+            loadForm('supplier');
+        });
+
+        document.getElementById('report-button').addEventListener('click', function () {
+            loadForm('report');
+        });
+
+        document.getElementById('bill-button').addEventListener('click', function () {
+            loadForm('bill');
+        });
+    </script>
+</body>
+</html>

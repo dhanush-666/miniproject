@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Navigation Bar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        .sidenav {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            background-color: #333;
+            color: #fff;
+            width: 200px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidenav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidenav ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidenav a {
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .sidenav img {
+            max-width: 20px;
+            max-height: 20px;
+        }
+
+        .content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidenav">
+        <ul>
+            <li><img src="source\customer.png" alt="Customer Icon"><a onclick="showContent('customer')">Customer</a></li>
+            <li><img src="source\product.png" alt="Product Icon"><a onclick="showContent('product')">Product</a></li>
+            <li><img src="source\supplier.png" alt="Supplier Icon"><a onclick="showContent('supplier')">Supplier</a></li>
+            <li><img src="source\report.png" alt="Report Icon"><a onclick="showContent('report')">Report</a></li>
+            <li><img src="source\bill.png" alt="Bill Icon"><a onclick="showContent('bill')">Bill</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <section id="customer">
+            <h2>Customer</h2>
+            <?php include('customer.php'); ?>
+        </section>
+        <section id="product">
+            <h2>Product</h2>
+           
+            <!-- Add your product content here -->
+        </section>
+        <section id="supplier">
+            <h2>Supplier</h2>
+          
+            <!-- Add your supplier content here -->
+        </section>
+        <section id="report">
+            <h2>Report</h2>
+           
+            <!-- Add your report content here -->
+        </section>
+        <section id="bill">
+            <h2>Bill</h2>
+           
+            <!-- Add your bill content here -->
+        </section>
+    </div>
+    <script>
+        function showContent(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+    
+            // Show the selected section
+            const selectedSection = document.getElementById(sectionId);
+            selectedSection.style.display = 'block';
+    
+            // Load PHP content from separate files using AJAX
+            if (sectionId !== 'customer') {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        document.getElementById(sectionId).innerHTML = this.responseText;
+                    }
+                };
+                xhttp.open('GET', sectionId + '.php', true);
+                xhttp.send();
+            }
+        }
+    </script>
+    
+</body>
+</html>
